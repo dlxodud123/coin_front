@@ -1,0 +1,16 @@
+.main_img_container{
+    width: 100%;
+    background-color: #f4f4f4;
+    height: 600px;
+    padding-top: 25px;
+}
+.main_info_container{
+    width: 100%;
+    height: 600px;
+    background-color: #f4f4f4;
+}
+.main_info_content{
+    width: 1280px;
+    display: flex;
+    margin: auto;
+}

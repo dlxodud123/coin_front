@@ -4,3 +4,24 @@
     background-color: white;
     border: 1px solid rgba(0,0,0,0.2);
 }
+.main_coin_name{
+    font-size: 20px;
+    width: 200px;
+    height: 54px;
+    padding-top: 28px;
+
+}
+.main_coin_price{
+    font-size: 20px;
+    width: 275px;
+    height: 54px;
+    padding-top: 28px;
+    text-align: right;
+}
+.main_coin_rate{
+    font-size: 20px;
+    width: 120px;
+    height: 54px;
+    padding-top: 28px;
+    text-align: right;
+}

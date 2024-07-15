@@ -1,0 +1,17 @@
+.login_container{
+    width: 100%;
+    height: 550px;
+    background-color: #f4f4f4;
+    padding-top: 40px;
+}
+.login_content{
+    width: 600px;
+    height: 450px;
+    margin: auto;
+    background-color: white;
+}
+.tag_a{
+    font-size: 13px;
+    text-decoration: none;
+    color: black;
+}

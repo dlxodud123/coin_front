@@ -4,7 +4,7 @@ const Footer = () => {
     return(
         <>
             <div className="footer_container">
-                <div style={{fontSize:"17px", paddingTop:"40px"}}>
+                <div style={{fontSize:"15px", paddingTop:"40px"}}>
                     <div>
                         고객센터 <label style={{fontWeight:"bold"}}>1588-5682</label>&nbsp;
                         <label style={{color:"rgba(0,0,0,0.5)"}}>(평일 09:00~18:00/유료) | </label>  

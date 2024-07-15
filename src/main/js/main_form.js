@@ -15,7 +15,6 @@ const Main_form = () => {
             <div className="main_info_container">
                 <div className="main_info_content">
                     <Main_news_info></Main_news_info>
-                    <div></div>
                     <Main_coin_info></Main_coin_info>
                 </div>
             </div>

@@ -24,17 +24,18 @@ const Main_coin_info = () => {
   const EVEN = 'EVEN';
   const FALL = 'FALL';
 
+  const fetchData = async () => {
+    try {
+      const result = await fetchTickerData();
+      setData(result);
+    } catch (error) {
+      setError(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const result = await fetchTickerData();
-        setData(result);
-      } catch (error) {
-        setError(error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
 
     fetchData(); // Initial fetch
 

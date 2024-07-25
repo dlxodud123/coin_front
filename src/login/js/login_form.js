@@ -1,5 +1,6 @@
  import './../css/login_form.css';
  import Header from '../../common/js/header';
+ import Footer from '../../common/js/footer';
 
 const Login_form = () => {
     return(
@@ -45,7 +46,7 @@ const Login_form = () => {
                     </div>
                 </div>
             </div>
-            {/* <Footer></Footer> */}
+            <Footer></Footer>
         </>
     )
 }

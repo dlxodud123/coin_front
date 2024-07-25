@@ -1,0 +1,41 @@
+.exchange_coin_search_content{
+    background-color: white;
+    width: 400px;
+    height: 950px;
+}
+.exchange_click_off{
+    width: 80px;
+    text-align: center;
+    margin-top: 10px;
+    font-weight: 500;
+    cursor: pointer;
+}
+.exchange_click_on{
+    width: 80px;
+    text-align: center;
+    border-bottom: 3px solid #0062DF;
+    font-weight: 700;
+    color: #0062DF;
+    margin-top: 10px;
+    cursor: pointer;
+}
+.scrollable-container{
+    height: 830px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+.scrollable-container::-webkit-scrollbar {
+    width: 7px; 
+}
+.scrollable-container::-webkit-scrollbar-track {
+    background: #f1f1f1; /* 스크롤바 트랙 배경 */
+}
+
+.scrollable-container::-webkit-scrollbar-thumb {
+    background: rgba(127,127,127,0.4); /* 스크롤바 색상 */
+    border-radius: 5px;
+}
+
+.scrollable-container::-webkit-scrollbar-thumb:hover {
+    background: rgba(127,127,127,0.4); /* 스크롤바 색상 (hover 시) */
+}

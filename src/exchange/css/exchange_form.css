@@ -1,0 +1,12 @@
+.exchange_container{
+    background-color: #f4f4f4;
+    /* background-color: black; */
+    height: 1000px;
+    padding-top: 15px;
+}
+.exchange_content{
+    width: 1280px;
+    height: 500px;
+    margin: auto;
+    display: flex;
+}

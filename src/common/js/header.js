@@ -14,7 +14,7 @@ const Header = () => {
                         <img onClick={() => img_click()} style={{width:"130px", marginTop:"12px", cursor:"pointer"}} src={`${process.env.PUBLIC_URL}/images/logo/banner_logo.png`}></img>
                     </div>
                     <div style={{width:"130px", marginTop:"22px"}}>
-                        <a href='/market' className='link'>거래소</a>
+                        <a href='/exchange' className='link'>거래소</a>
                     </div>
                     <div style={{width:"130px", marginTop:"22px"}}>
                         <a href='#' className='link'>게시판</a>

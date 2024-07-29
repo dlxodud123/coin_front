@@ -11,7 +11,7 @@ const fetchTickerData = async () => {
     const options = {
       method: 'GET',
       url: 'https://api.upbit.com/v1/ticker',
-      params: { markets: 'KRW-BTC, KRW-ETH, KRW-ADA, KRW-SOL, KRW-XRP, KRW-DOT, KRW-LINK, KRW-AVAX, KRW-ATOM, KRW-XLM, KRW-THETA, KRW-TRX, KRW-AAVE, KRW-ID, KRW-STMX, KRW-EGLD, KRW-NEO, KRW-HBAR, KRW-SHIB, KRW-DOGE' },
+      params: { markets: 'KRW-BTC, KRW-ETH, KRW-ADA, KRW-SOL, KRW-XRP, KRW-DOT, KRW-LINK, KRW-AVAX, KRW-ATOM, KRW-XLM, KRW-THETA, KRW-TRX, KRW-AAVE, KRW-EOS, KRW-STMX, KRW-EGLD, KRW-NEO, KRW-HBAR, KRW-SHIB, KRW-DOGE' },
       headers: { accept: 'application/json' }
     };
   
@@ -19,7 +19,7 @@ const fetchTickerData = async () => {
     return response.data;
 };
 
-const Exchange_coin_search = () => {
+const Exchange_coin_search = (props) => {
     const [data, setData] = useState([]);
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
@@ -50,7 +50,7 @@ const Exchange_coin_search = () => {
         "KRW-THETA": "쎄타토큰",
         "KRW-TRX": "트론",
         "KRW-AAVE": "에이브",
-        "KRW-ID": "아이디",
+        "KRW-EOS": "이오스",
         "KRW-STMX": "스톰엑스",
         "KRW-EGLD": "멀티버스엑스",
         "KRW-NEO": "네오",
@@ -105,18 +105,21 @@ const Exchange_coin_search = () => {
     }
 
     const formatSignedChangeRate = (number) => {
-        return Math.round(number * 100);
+        return Math.round(number * 100) / 100;
     }
 
-    const formatSignedChangePrice = () => {
-        return;
+    const formatSignedChangePrice = (number) => {
+        // console.log(number);
+        if (number >= 1000) {
+            return new Intl.NumberFormat('en-US').format(number);
+        }
+        return number;
     }
 
     const filteredData = data.filter((coin) =>
         formatKorName(coin.market).includes(inputValue) 
     );
 
-    // Sort filtered data
     const sortedFilteredData = [...filteredData].sort((a, b) => b.acc_trade_price_24h - a.acc_trade_price_24h);
 
     return(
@@ -193,15 +196,15 @@ const Exchange_coin_search = () => {
                                         <MdStarRate style={{border:"none", color:"rgba(127,127,127,0.3)"}} size={22} />
                                     </div>
                                     <div style={{marginTop:"12px", width:"100px"}}>
-                                        <div style={{fontSize:"13px"}}>{formatKorName(coin.market)}</div>
-                                        <div style={{fontSize:"13px", color:"rgba(0,0,0,0.8)"}}>{formatEngName(coin.market)}</div>
+                                        <a className='coin_name_select' onClick={() => props.setSelectCoin(coin.market)} style={{fontSize:"13px", cursor:"pointer"}}>{formatKorName(coin.market)}</a>
+                                        <div style={{fontSize:"13px", color:"rgba(0,0,0,0.7)"}}>{formatEngName(coin.market)}</div>
                                     </div>
                                     {coin.change === RISE ? (
-                                        <div style={{width:"90px", height:"40px", textAlign:"right", border:"1px solid white", marginTop:"8px", fontWeight:"600", fontSize:"14px", color:"red"}}>
+                                        <div style={{width:"90px", height:"40px", textAlign:"right", border:"1px solid white", marginTop:"8px", fontWeight:"600", fontSize:"14px", color:"#C84A31"}}>
                                             {formatPrice(coin.trade_price)}
                                         </div>
                                     ) : coin.change === FALL ? (
-                                        <div style={{width:"90px", height:"40px", textAlign:"right", border:"1px solid white", marginTop:"8px", fontWeight:"600", fontSize:"14px", color:"blue"}}>
+                                        <div style={{width:"90px", height:"40px", textAlign:"right", border:"1px solid white", marginTop:"8px", fontWeight:"600", fontSize:"14px", color:"#1261C4"}}>
                                             {formatPrice(coin.trade_price)}
                                         </div>
                                     ) : (
@@ -211,21 +214,21 @@ const Exchange_coin_search = () => {
                                     )}
                                     {coin.change === RISE ? (
                                         <div style={{width:"70px", marginTop:"10px"}}>
-                                            <div style={{fontSize:"13px", color:"rgba(255,0,0,0.8)", textAlign:"right"}}>{formatSignedChangeRate(coin.signed_change_rate)}</div>
-                                            <div style={{fontSize:"13px", color:"rgba(255,0,0,0.8)", textAlign:"right"}}>{(coin.signed_change_price)}</div>
+                                            <div style={{fontSize:"13px", color:"#C84A31", textAlign:"right"}}>+{formatSignedChangeRate(coin.signed_change_rate * 100)}%</div>
+                                            <div style={{fontSize:"13px", color:"#C84A31", textAlign:"right"}}>{formatSignedChangePrice(coin.signed_change_price)}</div>
                                         </div>
                                     ) : coin.change === FALL ? (
                                         <div style={{width:"70px", marginTop:"10px"}}>
-                                            <div style={{fontSize:"13px", color:"rgba(0,0,255,0.8)", textAlign:"right"}}>{formatSignedChangeRate(coin.signed_change_rate)}</div>
-                                            <div style={{fontSize:"13px", color:"rgba(0,0,255,0.8)", textAlign:"right"}}>{(coin.signed_change_price)}</div>
+                                            <div style={{fontSize:"13px", color:"#1261C4", textAlign:"right"}}>{formatSignedChangeRate(coin.signed_change_rate * 100)}%</div>
+                                            <div style={{fontSize:"13px", color:"#1261C4", textAlign:"right"}}>{formatSignedChangePrice(coin.signed_change_price)}</div>
                                         </div>
                                     ) : (
                                         <div style={{width:"70px", marginTop:"10px"}}>
-                                            <div style={{fontSize:"13px", color:"rgba(0,0,0,0.8)", textAlign:"right"}}>{formatSignedChangeRate(coin.signed_change_rate)}</div>
-                                            <div style={{fontSize:"13px", color:"rgba(0,0,0,0.8)", textAlign:"right"}}>{(coin.signed_change_price)}</div>
+                                            <div style={{fontSize:"13px", color:"rgba(0,0,0,0.8)", textAlign:"right"}}>{formatSignedChangeRate(coin.signed_change_rate * 100)}%</div>
+                                            <div style={{fontSize:"13px", color:"rgba(0,0,0,0.8)", textAlign:"right"}}>{formatSignedChangePrice(coin.signed_change_price)}</div>
                                         </div>
                                     )}
-                                    {coin.signed_change_price}
+                                    {/* {coin.signed_change_price} */}
                                     <div style={{fontSize:"13px", marginTop:"10px", textAlign:"right", width:"90px"}}>
                                         {formatAccTrade(coin.acc_trade_price_24h)}<label style={{color:"rgba(0,0,0,0.5)"}}>백만</label>
                                     </div>

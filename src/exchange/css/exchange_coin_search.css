@@ -39,3 +39,6 @@
 .scrollable-container::-webkit-scrollbar-thumb:hover {
     background: rgba(127,127,127,0.4); /* 스크롤바 색상 (hover 시) */
 }
+.coin_name_select:hover{
+    text-decoration: underline;
+}

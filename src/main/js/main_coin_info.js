@@ -60,8 +60,8 @@ const Main_coin_info = () => {
               <>
                 <div key={index} style={{display:"flex", marginLeft:"20px", alignItems:"center"}}>
                   <div className="main_coin_name">{coinName[index]}</div>
-                  <div style={{color:"red"}} className='main_coin_price'>{coin.trade_price.toLocaleString('en-US')}&nbsp;KRW</div>
-                  <div style={{color:"red"}} className='main_coin_rate'>+{(coin.signed_change_rate*100).toFixed(2)}%</div>
+                  <div style={{color:"#C84A31"}} className='main_coin_price'>{coin.trade_price.toLocaleString('en-US')}&nbsp;KRW</div>
+                  <div style={{color:"#C84A31"}} className='main_coin_rate'>+{(coin.signed_change_rate*100).toFixed(2)}%</div>
                 </div>
                 <div style={{height:"1px", width:"590px", backgroundColor:"rgba(0,0,0,0.1)", marginLeft:"20px"}}></div>
               </>
@@ -82,8 +82,8 @@ const Main_coin_info = () => {
               <>
                 <div key={index} style={{display:"flex", marginLeft:"20px", alignItems:"center"}}>
                   <div className="main_coin_name">{coinName[index]}</div>
-                  <div style={{color:"blue"}} className='main_coin_price'>{coin.trade_price.toLocaleString('en-US')}&nbsp;KRW</div>
-                  <div style={{color:"blue"}} className='main_coin_rate'>{(coin.signed_change_rate*100).toFixed(2)}%</div>
+                  <div style={{color:"#1261C4"}} className='main_coin_price'>{coin.trade_price.toLocaleString('en-US')}&nbsp;KRW</div>
+                  <div style={{color:"#1261C4"}} className='main_coin_rate'>{(coin.signed_change_rate*100).toFixed(2)}%</div>
                 </div>
                 <div style={{height:"1px", width:"590px", backgroundColor:"rgba(0,0,0,0.1)", marginLeft:"20px"}}></div>
               </>

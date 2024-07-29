@@ -1,12 +1,16 @@
+import { useEffect, useState } from 'react';
 import './../css/exchange_coin_info.css';
+import Exchange_coin_info_top from './exchange_coin_info_top';
 
-const Excahnge_coin_info = () => {
+const Excahnge_coin_info = (props) => {
+
+
+
     return(
         <>
             <div className='exchange_coin_info_content'>
-                <div style={{width:"100px", height:"1000px", backgroundColor:"red"}}>
-                </div>
-                <div style={{width:"100px", height:"1000px", backgroundColor:"blue"}}>
+                <div>
+                    <Exchange_coin_info_top selectCoin={props.selectCoin}></Exchange_coin_info_top>
                 </div>
             </div>
         </>

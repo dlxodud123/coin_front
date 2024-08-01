@@ -1,0 +1,17 @@
+.click_on{
+    width: 150px;
+    text-align: center;
+    border-bottom: 3px solid #0062DF;
+    font-weight: 700;
+    color: #0062DF;
+    margin-top: 10px;
+    cursor: pointer;
+    height: 39px;
+}
+.click_off{
+    width: 150px;
+    text-align: center;
+    margin-top: 10px;
+    font-weight: 500;
+    cursor: pointer;
+}

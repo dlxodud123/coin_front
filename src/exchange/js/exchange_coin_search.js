@@ -5,7 +5,6 @@ import { FaArrowRightArrowLeft } from "react-icons/fa6";
 import { MdStarRate } from "react-icons/md";
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useQuery } from 'react-query';
 
 const fetchTickerData = async () => {
     const options = {
@@ -184,7 +183,7 @@ const Exchange_coin_search = (props) => {
                         전일대비 
                     </div>
                     <div style={{width:"80px", textAlign:"center", marginTop:"6px"}}>
-                        거래대금
+                        거래대금 
                     </div>
                 </div>
                 <div className='scrollable-container'>

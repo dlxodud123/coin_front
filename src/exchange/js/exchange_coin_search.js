@@ -109,7 +109,7 @@ const Exchange_coin_search = (props) => {
 
     const formatSignedChangePrice = (number) => {
         // console.log(number);
-        if (number >= 1000) {
+        if (Math.abs(number) >= 1000) {
             return new Intl.NumberFormat('en-US').format(number);
         }
         return number;

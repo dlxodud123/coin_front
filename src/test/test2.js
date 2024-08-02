@@ -3,15 +3,18 @@ import Highcharts from 'highcharts/highstock';
 import HighchartsReact from 'highcharts-react-official';
 
 const Test2 = () => {
+    
+
+
     // 차트 옵션
     const options = {
         chart: {
-            width: 800, // 너비 설정
-            height: 600, // 높이 설정
+            width: 870, // 너비 설정
+            height: 500, // 높이 설정
             // 다른 스타일 옵션들도 추가할 수 있음
         },
         title: {
-            text: 'Dynamic data in Highcharts Stock'
+            text: ''
         },
         xAxis: {
             overscroll: 500000,
@@ -20,11 +23,6 @@ const Test2 = () => {
         },
         rangeSelector: {
             buttons: [
-            // {
-            //     type: 'second',
-            //     count: 50,
-            //     text: '1s'
-            // }, 
             {
                 type: 'minute',
                 count: 5,

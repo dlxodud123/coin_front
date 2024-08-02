@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import './../css/exchange_coin_info.css';
 import Exchange_coin_info_top from './exchange_coin_info_top';
-import Excahnge_coin_info_price from './exchange_coin_info_price';
+import Exchange_coin_info_price from './exchange_coin_info_price';
+import Exchange_coin_chart from './exchange_coin_chart';
 
-const Excahnge_coin_info = (props) => {
+const Exchange_coin_info = (props) => {
 
     return(
         <>
@@ -12,11 +13,15 @@ const Excahnge_coin_info = (props) => {
                     <Exchange_coin_info_top selectCoin={props.selectCoin}></Exchange_coin_info_top>
                 </div>
                 <div>
-                    <Excahnge_coin_info_price selectCoin={props.selectCoin}></Excahnge_coin_info_price>
+                    <Exchange_coin_info_price selectCoin={props.selectCoin}></Exchange_coin_info_price>
+                </div>
+                <div style={{height:"10px"}}></div>
+                <div>
+                    <Exchange_coin_chart selectCoin={props.selectCoin}></Exchange_coin_chart>
                 </div>
             </div>
         </>
     )
 }
 
-export default Excahnge_coin_info;
+export default Exchange_coin_info;

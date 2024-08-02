@@ -43,7 +43,7 @@ const Exchange_coin_info_top = (props) => {
 
     return(
         <>
-            <div style={{borderBottom:"1px solid rgba(0,0,0,0.2)", display:"flex", height:"50px"}}>
+            <div style={{borderBottom:"1px solid rgba(0,0,0,0.1)", display:"flex", height:"50px"}}>
                 <div style={{display:"flex", width:"520px"}}>
                     <img src={img} style={{width:"30px", height:"30px", marginTop:"10px", marginLeft:"15px"}}></img>
                     <div style={{fontWeight:"bold", fontSize:"21px", marginTop:"10px", marginLeft:"10px"}}>
@@ -64,7 +64,7 @@ const Exchange_coin_info_top = (props) => {
                     <div onClick={() => setClickOn(2)} className="click_off">정보</div>
                 )}
 
-                <div style={{borderLeft:"1px solid rgba(0,0,0,0.2)"}}>
+                <div style={{borderLeft:"1px solid rgba(0,0,0,0.1)"}}>
                     <BsGearFill style={{color:"rgba(128,128,128,0.8)", cursor:"pointer", width:"50px", marginTop:"14px"}} size={20} />
                 </div>
             </div>

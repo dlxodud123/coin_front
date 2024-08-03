@@ -1,8 +1,61 @@
  import './../css/login_form.css';
  import Header from '../../common/js/header';
  import Footer from '../../common/js/footer';
+import { useEffect, useState } from 'react';
 
 const Login_form = () => {
+
+    const [loginBtn, setLoginBtn] = useState(false);
+    const [email, setEmail] = useState('');
+    const [pwd, setPwd] = useState('');
+
+    const handleSubmit = async (event) => {
+        event.preventDefault(); // 기본 폼 제출 동작 방지
+    
+        // FormData 객체 생성
+        const formData = new FormData();
+        formData.append('email', `${email}`);
+        formData.append('password', `${pwd}`);
+    
+        // fetch API를 사용해 POST 요청 보내기
+        try {
+            const response = await fetch('http://localhost:8080/your-endpoint', {
+                method: 'POST',
+                body: formData, // FormData 객체를 그대로 전송
+            });
+    
+            const result = await response.json();
+            console.log('Success : ', result); // 성공 시 결과 출력
+        } catch (error) {
+            console.error('Error : ', error); // 에러 발생 시 에러 메시지 출력
+        }
+    };
+    
+    useEffect(() => {
+        if(loginBtn) {
+            handleSubmit();
+        }
+    }, [loginBtn])
+
+
+    useEffect(() => {
+        console.log(email);
+        console.log(pwd);
+
+        if (email.length > 0 && pwd.length >= 5) {
+            setLoginBtn(true);
+        } else {
+            setLoginBtn(false);
+        }
+    }, [email, pwd])
+
+    const handleEmail = (e) => {
+        setEmail(e.target.value);
+    }
+    const handlePwd = (e) => {
+        setPwd(e.target.value);
+    }
+
     return(
         <>  
             <Header></Header>
@@ -21,13 +74,19 @@ const Login_form = () => {
                                 </div>
                             </div>
                             <div style={{width:"400px", height:"90px", textAlign:"center", marginTop:"30px"}}>
-                                <input style={{width:"320px", height:"30px", margin:"auto"}} placeholder='아이디'></input>
-                                <input type='password' style={{width:"320px", height:"30px", margin:"auto"}} placeholder='비밀번호'></input>
+                                <input onChange={handleEmail} style={{width:"320px", height:"30px", margin:"auto"}} placeholder='이메일'></input>
+                                <input onChange={handlePwd} type='password' style={{width:"320px", height:"30px", margin:"auto"}} placeholder='비밀번호'></input>
                             </div>
                             <div style={{width:"400px", height:"50px", textAlign:"center"}}>
-                                <button style={{width:"327px", height:"35px", margin:"auto"}}>
-                                    로그인
-                                </button>
+                                {loginBtn ? (
+                                    <button onClick={() => setLoginBtn(true)} style={{width:"327px", height:"35px", margin:"auto", color:"white", backgroundColor:"black", fontWeight:"bold"}}>
+                                        로그인
+                                    </button>
+                                ) : (
+                                    <button disabled style={{width:"327px", height:"35px", margin:"auto", color:"white"}}>
+                                        로그인
+                                    </button>
+                                )}
                             </div>
                         </div>
                         <div style={{width:"400px", margin:"1px auto", display:"flex"}}>

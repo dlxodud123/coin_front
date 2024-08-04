@@ -5,37 +5,33 @@ import { useEffect, useState } from 'react';
 
 const Register_form = () => {
     
-    // const [id, setId] = useState('');
+    const type = 'type';
+    
     const [pwd, setPwd] = useState('');
     const [pwdChk, setPwdChk] = useState('');
     const [name, setName] = useState('');
-    // const [phoneNumber, setPhoneNumber] = useState({
-    //     userPhone_1: '',
-    //     userPhone_2: '',
-    //     userPhone_3: ''
-    // });
     const [email, setEmail] = useState({
         userEmail_id: '',
         userEmail_domain_write: '',
         userEmail_domain_auto: 'type',
     });
-    const [finalEmail, setFinalEmail] = useState('');
     const [nick, setNick] = useState('');
 
+    const [nickDplBtn, setNickDplBtn] = useState(false);
+    
+    const [emailDplBtn, setEmailDplBtn] = useState(false)
+    const [emailDpl, setEmailDpl] = useState(false);
+    const [emailCertView, setEmailCertView] = useState(false);
 
-    // const [finalIdChk, setFinalIdChk] = useState(false);
+    const [finalEmail, setFinalEmail] = useState(false);
+    const [finalPwd, setFinalPwd] = useState(false);
     const [finalPwdChk, setFinalPwdChk] = useState(false);
-    const [finalNameChk, setFinalNameChk] = useState(false);
-    const [finalPhoneChk, setFinalPhoneChk] = useState(false);
-    const [finalEmailChk, setFinalEmailChk] = useState(false);
-    const [finalNickChk, setFinalNickChk] = useState(false);
+    const [finalName, setFinalName] = useState(false);
+    const [finalNick, setFinalNick] = useState(false);
 
     const [finalBtn, setFinalBtn] = useState(false)
 
 
-    // const handleIdChange = (e) => {
-    //     setId(e.target.value);
-    // }
     const handlePwdChange = (e) => {
         setPwd(e.target.value);
     }
@@ -45,16 +41,6 @@ const Register_form = () => {
     const handleNameChange = (e) => {
         setName(e.target.value);
     }
-    // const handlePhoneChange = (event) => {
-    //     const { name, value } = event.target;
-    //     // 숫자만 입력되도록 필터링
-    //     if (/^\d*$/.test(value)) {
-    //         setPhoneNumber({
-    //             ...phoneNumber,
-    //             [name]: value
-    //         });
-    //     }
-    // };
     const handleEmailChange = (event) => {
         const { name, value } = event.target;
         setEmail({
@@ -74,35 +60,117 @@ const Register_form = () => {
         setNick(e.target.value);
     };
 
+    const isValidDomain = (domain) => {
+        const lengthRegex = /^.{1,}\.com$/; // 한글자 이상 .com으로 끝나는 도메인 형식
+        return lengthRegex.test(domain);
+    };
+
+    const emailDuplication = () => {
+        // 이메일 중복 인증 코드
+        setEmailDpl(true);
+        alert("사용 가능한 이메일 입니다.");
+    }
+
+    const nickDuplication = () => {
+        // 닉네임 중복 인증 코드
+        alert("사용 가능한 닉네임 입니다.");
+        setFinalNick(true);
+    }
+
+    const emailCertification = () => {
+        alert("인증번호가 발송되었습니다.");
+
+        setEmailCertView(true);
+    }
+
+    // useEffect(() => {
+    //     console.log("이메일1 : ", email.userEmail_id);
+    //     console.log("이메일2 : ", email.userEmail_domain_write);
+    //     console.log("이메일3 : ", email.userEmail_domain_auto);
+    //     console.log("최종 이메일 : ", email.userEmail_id + '@' + email.userEmail_domain_write);
+    // }, [email])
 
     useEffect(() => {
-        // console.log("아이디 : ", id)
-        console.log("비밀번호 : ", pwd);
-        console.log("비밀번호 확인 : ", pwdChk)
-        console.log("이름 : ", name)
-        // console.log("전번1 : ", phoneNumber.userPhone_1);
-        // console.log("전번2 : ", phoneNumber.userPhone_2);
-        // console.log("전번3 : ", phoneNumber.userPhone_3);
-        console.log("이메일1 : ", email.userEmail_id);
-        console.log("이메일2 : ", email.userEmail_domain_write);
-        console.log("이메일3 : ", email.userEmail_domain_auto);
-        console.log("최종 이메일 : ", email.userEmail_id + '@' + email.userEmail_domain_write);
-        console.log("닉네임 : ", nick);
-        // if (pwd === pwdChk && pwd.length > 0) {
-        //     setFinalPwdChk(true);
-        // } else{
-        //     setFinalPwdChk(false);
-        // }
-    }, [email, nick, pwd, pwdChk, name])
+        console.log("이메일 중복 버튼 활성화 : ", finalEmail); 
+        console.log("닉네임 중복 버튼 활성화 : ", finalNick);
+        console.log("이메일 중복 확인 : ", emailDpl);
+        console.log("닉네임 중복 확인 : ", finalNick);
+        console.log("이메일 인증버튼 활성화 : ", );
+
+        console.log("비밀번호 최종 : ", finalPwd);
+        console.log("비밀번호 재확인 최종 : ", finalPwdChk);
+        console.log("이름 최종 : ", finalName);
+        console.log("닉네임 최종 : ", finalNick);
+        console.log()
+    }, [finalEmail, finalNick, emailDpl, finalNick, finalPwd, finalPwdChk, finalName])
+
+    // 이메일 중복 확인 버튼 활성화
+    useEffect(() => {
+        if (email.userEmail_domain_auto === type) {
+            if (isValidDomain(email.userEmail_domain_write)) {
+                setEmailDplBtn(true);
+            } else {
+                setEmailDplBtn(false);
+            }
+        } else {
+            setEmailDplBtn(true);
+        }
+    }, [email.userEmail_domain_auto, email.userEmail_domain_write, type, setEmailDplBtn]);
+
+    // 비밀번호 최종 확인
+    useEffect(() => {
+        if (pwd.length >= 5) {
+            setFinalPwd(true);
+        } else {
+            setFinalPwd(false);
+        }
+    }, [pwd, setFinalPwd])
+
+    // 비밀번호 재확인 최종 확인
+    useEffect(() => {
+        if (pwd === pwdChk) {
+            if (pwd.length === 0) {
+                setFinalPwdChk(false);
+            }else {
+                setFinalPwdChk(true);
+            }
+        } else {
+            setFinalPwdChk(false);
+        }
+    }, [pwd, pwdChk, finalPwdChk])
+
+    // 이름 최종 확인
+    useEffect(() => {
+        if (name.length >= 1) {
+            setFinalName(true);
+        } else{
+            setFinalName(false);
+        }
+    }, [name, setFinalName])
+
+    // 닉네임 중복 확인 버튼 활성화
+    useEffect(() => {
+        if (nick.length >= 2) {
+            setNickDplBtn(true);
+        } else{
+            setNickDplBtn(false);
+        }
+    }, [nick, setNickDplBtn])
+
+
+
+    // 회원가입 최종 확인 (이메일 중복확인 및 이메일 인증 + 닉네임 중복확인 남음)
+    useEffect(() => {
+        if (finalEmail && finalPwd && finalPwdChk && finalName && finalNick) {
+            setFinalBtn(true);
+        } else {
+            setFinalBtn(false);
+        }
+    }, [setFinalBtn, finalEmail, finalPwd, finalPwdChk, finalName, finalNick])
 
     return(
         <>
             <Header></Header>
-            {/* {finalPwdChk ? (
-                <div>true</div>
-            ) : (
-                <div>false</div>
-            )} */}
             <div className='register_container'>
                 <div className='register_content'>
                     <div style={{textAlign:"center", paddingTop:"20px"}}>
@@ -113,20 +181,11 @@ const Register_form = () => {
                             <div style={{width:"200px", height:"50px", margin:"auto", color:"white", fontWeight:"bold", textAlign:"center", fontSize:"20px", paddingTop:"10px"}}>
                                 회&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 원&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                가&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;입
+                                가&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                입
                             </div>
                         </div>
                         <div className='register_border_content'>
-                            {/* <div>
-                                <div style={{fontWeight:"bold"}}>
-                                    아이디
-                                </div>
-                                <div style={{display:"flex"}}>
-                                    <input onChange={handleIdChange} maxLength="20" id='id' style={{height:"28px", width:"268px"}} placeholder='5~20자 입력'></input>
-                                    <button style={{width:"64px", fontSize:"12px", height:"20px", marginTop:"7px", marginLeft:"10px", backgroundColor:"white", border:"2px solid #14776A", color:"#14776A", fontWeight:"bold", borderRadius:"5px"}}>중복확인</button>
-                                </div>
-                            </div> */}
-
                             <div style={{marginTop:"30px"}}>
                                 <div style={{fontWeight:"bold"}}>
                                     이메일
@@ -165,28 +224,51 @@ const Register_form = () => {
                                         <option value="nate.com">nate.com</option>
                                         <option value="daum.net">daum.net</option>
                                     </select>
-                                    <button style={{width:"64px", fontSize:"12px", height:"20px", marginTop:"9px", marginLeft:"5px", backgroundColor:"white", border:"2px solid #14776A", color:"#14776A", fontWeight:"bold", borderRadius:"5px"}}>중복확인</button>
+                                    {emailDplBtn ? (
+                                        emailDpl ? (
+                                            <>
+                                                <button onClick={() => emailCertification()} style={{width:"64px", fontSize:"12px", height:"20px", marginTop:"8px", marginLeft:"5px", backgroundColor:"white", border:"2px solid #14776A", color:"#14776A", fontWeight:"bold", borderRadius:"5px", cursor:"pointer"}}>
+                                                    인증받기 
+                                                </button>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <button onClick={() => emailDuplication()} style={{width:"64px", fontSize:"12px", height:"20px", marginTop:"8px", marginLeft:"5px", backgroundColor:"white", border:"2px solid #14776A", color:"#14776A", fontWeight:"bold", borderRadius:"5px", cursor:"pointer"}}>
+                                                    중복확인
+                                                </button>
+                                            </>
+                                        )
+                                    ) : (
+                                        <>  
+                                            <button disabled style={{width:"64px", fontSize:"12px", height:"20px", marginTop:"8px", marginLeft:"5px", backgroundColor:"white", border:"2px solid rgba(20, 119, 106, 0.3)", color:"rgba(20, 119, 106, 0.3)", fontWeight:"bold", borderRadius:"5px"}}>
+                                                중복확인
+                                            </button>
+                                        </>
+                                    )}
                                 </div>
                             </div>
-                            {email.userEmail_domain_write ? (
-                                <div style={{height:"10px"}}></div>
-                            ) : (
-                                pwd.length == 0 ? (
-                                    <div style={{height:"10px"}}></div>
+                            {email.userEmail_domain_auto === type ? (
+                                isValidDomain(email.userEmail_domain_write) ? (
+                                    <>
+                                        <div style={{height:"10px"}}></div>
+                                    </>
                                 ) : (
-                                    <div style={{height:"10px", fontSize:"12px", color:"red"}}>이메일 형식에 맞춰주세요</div>
+                                    email.userEmail_domain_write.length >= 1 ? (
+                                        <>
+                                            <div style={{height:"10px", fontSize:"12px", color:"red"}}>이메일 형식에 맞춰주세요</div>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <div style={{height:"10px"}}></div>
+                                        </>
+                                    )
                                 )
+                            ) : (
+                                <>
+                                    <div style={{height:"10px"}}></div>
+                                </>
                             )
                             }
-                            {/* {id.length < 5 ? (
-                                id.length > 0 ?(
-                                    <div style={{height:"10px", fontSize:"12px", color:"red"}}>5글자 이상 입력해주세요</div>
-                                ) : (
-                                    <div style={{height:"10px", fontSize:"12px", color:"red"}}></div>
-                                )
-                            ) : (
-                                <div style={{height:"10px", fontSize:"12px", color:"red"}}></div>
-                            )} */}
 
                             <div style={{marginTop:"20px"}}>
                                 <div style={{fontWeight:"bold"}}>
@@ -197,9 +279,11 @@ const Register_form = () => {
                                 </div>
                             </div>
                             {pwd.length >= 5 ? (
-                                <div style={{height:"10px"}}></div>
+                                <>
+                                    <div style={{height:"10px"}}></div>
+                                </>
                             ) : (
-                                pwd.length == 0 ? (
+                                pwd.length === 0 ? (
                                     <div style={{height:"10px"}}></div>
                                 ) : (
                                     <div style={{height:"10px", fontSize:"12px", color:"red"}}>5글자 이상 입력해주세요</div>
@@ -211,7 +295,15 @@ const Register_form = () => {
                                     비밀번호 재확인
                                 </div>
                                 <div style={{display:"flex"}}>
-                                    <input onChange={handlePwdChkChange} id='pwdChk' style={{height:"28px", width:"350px"}} placeholder='비밀번호'></input>
+                                    {finalPwd ? (
+                                        <>
+                                            <input onChange={handlePwdChkChange} id='pwdChk' style={{height:"28px", width:"350px"}} placeholder='비밀번호'></input>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <input disabled onChange={handlePwdChkChange} id='pwdChk' style={{height:"28px", width:"350px", backgroundColor:"white", border:"1px solid black"}} placeholder='비밀번호'></input>
+                                        </>
+                                    )}
                                 </div>
                             </div>
 
@@ -237,19 +329,32 @@ const Register_form = () => {
                                     <input onChange={handleNameChange} id='name' style={{height:"28px", width:"350px"}} placeholder='이름'></input>
                                 </div>
                             </div>
+
                             <div style={{marginTop:"30px"}}>
                                 <div style={{fontWeight:"bold"}}>
                                     닉네임
                                 </div>
                                 <div style={{display:"flex"}}>
                                     <input onChange={handleNickChange} type='text' maxLength="8" style={{height:"28px", width:"268px"}} placeholder='닉네임 (2~8)'></input>
-                                    <button style={{width:"64px", fontSize:"12px", height:"20px", marginTop:"6px", marginLeft:"10px", backgroundColor:"white", border:"2px solid #14776A", color:"#14776A", fontWeight:"bold", borderRadius:"5px"}}>중복확인</button>
+                                    {nickDplBtn ? (
+                                        <>
+                                            <button onClick={() => nickDuplication()} style={{width:"64px", fontSize:"12px", height:"20px", marginTop:"6px", marginLeft:"10px", backgroundColor:"white", border:"2px solid rgba(20, 119, 106, 1)", color:"#14776A", fontWeight:"bold", borderRadius:"5px", cursor:"pointer", alignItems:"center"}}>
+                                                중복확인
+                                            </button>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <button disabled style={{width:"64px", fontSize:"12px", height:"20px", marginTop:"6px", marginLeft:"10px", backgroundColor:"white", border:"2px solid rgba(20, 119, 106, 0.3)", color:"rgba(20, 119, 106, 0.3)", fontWeight:"bold", borderRadius:"5px"}}>
+                                                중복확인
+                                            </button>
+                                        </>
+                                    )}
                                 </div>
                             </div>
                             {nick.length >= 2 ? (
                                 <div style={{height:"10px"}}></div>
                             ) : (
-                                nick.length == 0 ? (
+                                nick.length === 0 ? (
                                     <div style={{height:"10px"}}></div>
                                 ) : (
                                     <div style={{height:"10px", fontSize:"12px", color:"red"}}>2글자 이상 입력해주세요</div>

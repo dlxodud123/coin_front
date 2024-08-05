@@ -1,0 +1,16 @@
+.exchange_coin_buy_sell-container{
+    height: 380px;
+    width: 870px;
+    background-color: white;
+    overflow-y: auto; /* 스크롤 추가 */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+}
+
+.exchange_coin_buy_sell-container::-webkit-scrollbar { 
+    display: none;  /* Chrome, Safari, Opera */
+}
+
+.exchange_coin_buy_sell-content{
+    /* height: 500px; */
+}

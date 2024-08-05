@@ -15,11 +15,14 @@ const Register_form = () => {
         userEmail_domain_write: '',
         userEmail_domain_auto: 'type',
     });
+    const [combineEmail, setCombineEmail] = useState('');
+    const [certification, setCertification] = useState('');
     const [nick, setNick] = useState('');
 
+    const [certificationBtnClick, setCertificationBtnClick] = useState('인증받기')
 
     const [nickDplBtn, setNickDplBtn] = useState(false);
-    const [nickDpl, setNickDpl] = useState(false)
+    const [nickDpl, setNickDpl] = useState(false);
 
     const [emailDplBtn, setEmailDplBtn] = useState(false);
     const [emailDpl, setEmailDpl] = useState(false);
@@ -60,6 +63,9 @@ const Register_form = () => {
             userEmail_domain_write: value === 'type' ? '' : value
         }));
     };
+    const handleCertificationChange = (event) => {
+        setCertification(event.target.value);
+    }
     const handleNickChange = (e) => {
         setNick(e.target.value);
     };
@@ -82,7 +88,7 @@ const Register_form = () => {
     }
     const emailCertification = () => {
         // 이메일 인증 코드
-        alert("인증이 완료되었습니다.");
+        alert("인증이 완료되었습니다.");    
         setEmailCert(true)    
         setFinalEmail(true);
     }
@@ -95,30 +101,50 @@ const Register_form = () => {
         setFinalNick(true);
     }
 
-    // useEffect(() => {
-    //     console.log("이메일1 : ", email.userEmail_id);
-    //     console.log("이메일2 : ", email.userEmail_domain_write);
-    //     console.log("이메일3 : ", email.userEmail_domain_auto);
-    //     console.log("최종 이메일 : ", email.userEmail_id + '@' + email.userEmail_domain_write);
-    // }, [email])
+    useEffect(() => {
+        setCombineEmail(email.userEmail_id + '@' + email.userEmail_domain_write);
+        console.log("이메일1 : ", email.userEmail_id);
+        console.log("이메일2 : ", email.userEmail_domain_write);
+        console.log("이메일3 : ", email.userEmail_domain_auto);
+        console.log("최종 이메일 : ", combineEmail);
+    }, [email, setCombineEmail, combineEmail])
 
     useEffect(() => {
-        console.log("닉네임 중복 버튼 활성화 : ", nickDplBtn);
-        console.log("닉네임 중복 확인 : ", nickDpl);
+        // console.log("닉네임 중복 버튼 활성화 : ", nickDplBtn);
+        // console.log("닉네임 중복 확인 : ", nickDpl);
 
-        console.log("이메일 중복 버튼 활성화 : ", emailDplBtn); 
-        console.log("이메일 중복 확인 : ", emailDpl);
-        console.log("이메일 인증 버튼 활성화 : ", emailCertBtn);
-        console.log("이메일 인증 창 확인 : ", emailCertView);
-        console.log("이메일 인증 확인 : ", emailCert);
+        // console.log("이메일 중복 버튼 활성화 : ", emailDplBtn); 
+        // console.log("이메일 중복 확인 : ", emailDpl);
+        // console.log("이메일 인증 버튼 활성화 : ", emailCertBtn);
+        // console.log("이메일 인증 창 확인 : ", emailCertView);
+        // console.log("이메일 인증 확인 : ", emailCert);
 
-        console.log("비밀번호 최종 : ", finalPwd);
-        console.log("비밀번호 재확인 최종 : ", finalPwdChk);
-        console.log("이름 최종 : ", finalName);
-        console.log("닉네임 최종 : ", finalNick);
-        console.log("이메일 최종 : ", finalEmail);
+        // console.log("비밀번호 최종 : ", finalPwd);
+        // console.log("비밀번호 재확인 최종 : ", finalPwdChk);
+        // console.log("이름 최종 : ", finalName);
+        // console.log("닉네임 최종 : ", finalNick);
+        // console.log("이메일 최종 : ", finalEmail);
     }, [nickDplBtn, nickDpl, emailDplBtn, emailDpl, emailCertBtn, emailCertView, emailCert,  
         finalPwd, finalPwdChk, finalName, finalNick, finalEmail])
+
+    // 이메일 관련 상태가 변경될 때 중복 확인 및 인증 상태 초기화
+    useEffect(() => {
+        setEmailDpl(false);
+        setEmailCertBtn(false);
+        setEmailCertView(false);
+        setEmailCert(false);
+        setFinalEmail(false);
+        setCertification('');
+        if (email.userEmail_domain_auto === 'type') {
+            if (isValidDomain(email.userEmail_domain_write)) {
+                setEmailDplBtn(true);
+            } else {
+                setEmailDplBtn(false);
+            }
+        } else {
+            setEmailDplBtn(true);
+        }
+    }, [email.userEmail_id, email.userEmail_domain_write, email.userEmail_domain_auto]);
 
     // 이메일 중복 확인 버튼 활성화
     useEffect(() => {
@@ -184,6 +210,33 @@ const Register_form = () => {
         }
     }, [setFinalBtn, finalEmail, finalPwd, finalPwdChk, finalName, finalNick])
 
+    const finalJoin = async (event) => {
+        event.preventDefault();
+    
+        // 보낼 JSON 데이터
+        const data = {
+            email: `${combineEmail}`,
+            password: `${pwd}`,
+            nickname : `${nick}`
+        };
+
+        // fetch API를 사용해 POST 요청 보내기
+        try {
+            const response = await fetch('http://localhost:8080/your-endpoint', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data), // 데이터를 JSON 문자열로 변환
+            });
+
+            const result = await response.json();
+            console.log('Success:', result);
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
+
     return(
         <>
             <Header></Header>
@@ -243,8 +296,8 @@ const Register_form = () => {
                                     {emailDplBtn ? (
                                         emailCertBtn ? (
                                             <>
-                                                <button onClick={() => emailCertificationSend()} style={{width:"64px", fontSize:"12px", height:"20px", marginTop:"8px", marginLeft:"5px", backgroundColor:"white", border:"2px solid #14776A", color:"#14776A", fontWeight:"bold", borderRadius:"5px", cursor:"pointer"}}>
-                                                    인증받기 
+                                                <button onClick={() => {emailCertificationSend(); setCertificationBtnClick('재전송');}} style={{width:"64px", fontSize:"12px", height:"20px", marginTop:"8px", marginLeft:"5px", backgroundColor:"white", border:"2px solid #14776A", color:"#14776A", fontWeight:"bold", borderRadius:"5px", cursor:"pointer"}}>
+                                                    {certificationBtnClick} 
                                                 </button>
                                             </>
                                         ) : (
@@ -288,13 +341,25 @@ const Register_form = () => {
 
                             {emailCertView ? (
                                 <>
-                                    인증받기 버튼 누름
-                                    <button onClick={() => emailCertification()}>인증하기</button>
+                                    <div>
+                                        <input onChange={handleCertificationChange} style={{height:"28px", width:"271px", fontSize:"15px"}} type='text' placeholder='인증번호 입력 (6글자)' maxLength={6}></input>
+                                        {certification.length === 6 ? (
+                                            <>
+                                                <button onClick={() => emailCertification()} style={{width:"64px", fontSize:"12px", height:"20px", marginTop:"8px", marginLeft:"5px", backgroundColor:"white", border:"2px solid #14776A", color:"#14776A", fontWeight:"bold", borderRadius:"5px", cursor:"pointer"}}>
+                                                    인증하기
+                                                </button>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <button disabled style={{width:"64px", fontSize:"12px", height:"20px", marginTop:"8px", marginLeft:"5px", backgroundColor:"white", border:"2px solid rgba(20, 119, 106, 0.3)", color:"rgba(20, 119, 106, 0.3)", fontWeight:"bold", borderRadius:"5px"}}>
+                                                    인증하기
+                                                </button>
+                                            </>
+                                        )}
+                                    </div>
                                 </>
                             ) : (
                                 <>
-                                    인증받기 버튼 안누름
-                                    <button>인증하기</button>
                                 </>
                             )}
 
@@ -390,11 +455,11 @@ const Register_form = () => {
                             )}
                             {finalBtn ? (
                                 <div style={{marginTop:"30px"}}>
-                                    <button style={{width:"350px", height:"40px", backgroundColor:"#14776A", color:"white", borderRadius:"8px", border:"none"}}>가입하기</button>
+                                    <button onClick={() => finalJoin()} style={{width:"350px", height:"40px", backgroundColor:"#14776A", color:"white", borderRadius:"8px", border:"none"}}>가입하기</button>
                                 </div>
                             ) : (
                                 <div style={{marginTop:"30px"}}>
-                                    <button style={{width:"350px", height:"40px", backgroundColor:"rgba(127,127,127,0.4)", color:"white", borderRadius:"8px", border:"none"}}>가입하기</button>
+                                    <button disabled style={{width:"350px", height:"40px", backgroundColor:"rgba(127,127,127,0.4)", color:"white", borderRadius:"8px", border:"none"}}>가입하기</button>
                                 </div>
                             )}
                         </div>

@@ -150,7 +150,7 @@ const Exchange_coin_info_price = (props) => {
                                 거래량(24h)
                             </div>
                             <div style={{width:"150px", textAlign:"right", fontSize:"14px"}}>
-                                {formatPrice(data[0].acc_trade_volume_24h)}<lable style={{color:"rgba(0,0,0,0.5)", fontSize:"13px"}}>&nbsp;{formatEngName(data[0].market)}</lable>
+                                {formatPrice(data[0].acc_trade_volume_24h)}<label style={{color:"rgba(0,0,0,0.5)", fontSize:"13px"}}>&nbsp;{formatEngName(data[0].market)}</label>
                             </div>
                         </div>
                         <div style={{display:"flex", width:"240px", height:"40px", alignItems:"center", fontSize:"13px"}}>
